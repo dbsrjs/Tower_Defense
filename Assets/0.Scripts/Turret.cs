@@ -7,11 +7,15 @@ public class Turret : MonoBehaviour
 {
     [SerializeField] private Transform turretRotationPoint;  //포탑 회전 지점의 Transform 컴포넌트
     [SerializeField] private LayerMask enemyMask;  //적 캐릭터를 판별하기 위한 레이어 마스크
+    [SerializeField] private GameObject bulletPrefab;
+    [SerializeField] private Transform firingPoint;
 
     [SerializeField] private float targetingRange = 5f;  //사정 거리
     [SerializeField] private float rotationSpeed = 5f;  //포탑 회전 속도
+    [SerializeField] private float bps = 1f;    //총알 속도
 
     private Transform target;  // 현재 타겟으로 지정된 Transform 컴포넌트
+    private float timeUntilFire;
 
     private void Update()
     {
@@ -27,6 +31,22 @@ public class Turret : MonoBehaviour
         {
             target = null;  // 타겟이 사정 거리를 벗어나면 타겟 초기화
         }
+        else
+        {
+            timeUntilFire += Time.deltaTime;
+            if (timeUntilFire >= 1f / bps)
+            {
+                Shoot();
+                timeUntilFire = 0f;
+            }
+        }
+    }
+
+    private void Shoot()
+    {
+        GameObject bulletObj = Instantiate(bulletPrefab, firingPoint.position, Quaternion.identity);
+        Bullet bulletScript = bulletObj.GetComponent<Bullet>();
+        bulletScript.SetTarget(target);
     }
 
     private void FindTarget()
