@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEditor;
 
 public class Turret : MonoBehaviour
@@ -9,13 +10,29 @@ public class Turret : MonoBehaviour
     [SerializeField] private LayerMask enemyMask;  //적 캐릭터를 판별하기 위한 레이어 마스크
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private Transform firingPoint;
+    [SerializeField] private GameObject upgradeUI;
+    [SerializeField] private Button upgradeButton;
 
     [SerializeField] private float targetingRange = 5f;  //사정 거리
     [SerializeField] private float rotationSpeed = 5f;  //포탑 회전 속도
     [SerializeField] private float bps = 1f;    //총알 속도
+    [SerializeField] private int baseUpgradeCoset = 100;
+
+    private float bpsBase;
+    private float targetingRangeBase;
 
     private Transform target;  // 현재 타겟으로 지정된 Transform 컴포넌트
     private float timeUntilFire;
+
+    private int level = 1;
+
+    private void Start()
+    {
+        bpsBase = bps;
+        targetingRangeBase = targetingRange;
+
+        upgradeButton.onClick.AddListener(Upgrade);
+    }
 
     private void Update()
     {
@@ -75,9 +92,54 @@ public class Turret : MonoBehaviour
         turretRotationPoint.rotation = Quaternion.RotateTowards(turretRotationPoint.rotation, targetRotation, rotationSpeed * Time.deltaTime);
     }
 
-    private void OnDrawGizmosSelected()
+    public void OpenUpgradeUI()
+    {
+        upgradeUI.SetActive(true);
+    }
+
+    public void CloseUpgradeUI()
+    {
+        upgradeUI.SetActive(false);
+        UIManager.main.SetHoveringState(false);
+    }
+
+    public void Upgrade()
+    {
+        if (CalculateCost() > LevelManager.main.currency)
+        {
+            return;
+        }
+
+        LevelManager.main.SpendCurrency(CalculateCost());
+
+        level++;
+
+        bps = CalculateBPS();
+        targetingRange = CalculateRange();
+
+        CloseUpgradeUI();
+        Debug.Log("New BPS : " + bps);
+        Debug.Log("New BPS : " + targetingRange);
+        Debug.Log("New Cost : " + CalculateCost());
+    }
+
+    private int CalculateCost()
+    {
+        return Mathf.RoundToInt(baseUpgradeCoset * Mathf.Pow(level, 0.8f));
+    }
+
+    private float CalculateBPS()
+    {
+        return bpsBase * Mathf.Pow(level, 0.6f);
+    }
+    private float CalculateRange()
+    {
+        return targetingRangeBase * Mathf.Pow(level, 0.4f);
+    }
+
+    /*private void OnDrawGizmosSelected()
     {
         Handles.color = Color.cyan; //프레임 색상
         Handles.DrawWireDisc(transform.position, transform.forward, targetingRange);  //에디터 상에서 사정 거리를 시각적으로 표시
-    }
+    }*/
 }

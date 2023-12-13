@@ -8,9 +8,10 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private GameObject[] enemyPrefabs;
 
     [SerializeField] private int baseEnemies = 8;  //기본 적의 생성 수
-    [SerializeField] private float enemiesperSecond = 0.5f;  // 초당 생성되는 적의 수    (1/enemiesperSecond)
+    [SerializeField] private float enemiesPerSecond = 0.5f;  // 초당 생성되는 적의 수    (1/enemiesperSecond)
     [SerializeField] private float timeBetWeenWaves = 5f;  //웨이브 간 시간 간격
     [SerializeField] private float difficultyScalingFactor = 0.75f;  //난이도 조절 계수
+    [SerializeField] private float enemiesPerSecondCap = 15f;
 
     public static UnityEvent onEnemyDestroy = new UnityEvent();
 
@@ -18,6 +19,7 @@ public class EnemySpawner : MonoBehaviour
     private float timeSinceLastSpawn;  //마지막 적 생성 이후의 경과 시간
     private int enemiesAlive;  //현재 존재하는 적의 수
     private int enemiesLeftToSpawn;  //생성되지 않은 적의 수
+    private float eps;  //Enemies Per Second
     private bool isSpawning = false;  //적 생성 상태 확인 변수
 
     private void Awake()
@@ -39,7 +41,7 @@ public class EnemySpawner : MonoBehaviour
 
         timeSinceLastSpawn += Time.deltaTime;
 
-        if (timeSinceLastSpawn >= (1f / enemiesperSecond) && enemiesLeftToSpawn > 0)    //2초에 1명
+        if (timeSinceLastSpawn >= (1f / eps) && enemiesLeftToSpawn > 0)    //2초에 1명
         {
             SpawnEnemy();
             enemiesLeftToSpawn--;
@@ -63,6 +65,7 @@ public class EnemySpawner : MonoBehaviour
         yield return new WaitForSeconds(timeBetWeenWaves);  //웨이브 간 시간 간격만큼 대기
         isSpawning = true;
         enemiesLeftToSpawn = EnemiesPerWave();  //생성될 적의 수 계산
+        eps = EnemiesPerSecond();
     }
 
     private void EndWave()
@@ -75,12 +78,18 @@ public class EnemySpawner : MonoBehaviour
 
     private void SpawnEnemy()
     {
-        GameObject prefabToSpawn = enemyPrefabs[0];
+        int index = Random.Range(0, enemyPrefabs.Length);
+        GameObject prefabToSpawn = enemyPrefabs[index];
         Instantiate(prefabToSpawn, LevelManager.main.startPoint.position, Quaternion.identity);
     }
 
     private int EnemiesPerWave()
     {
         return Mathf.RoundToInt(baseEnemies * Mathf.Pow(currentWave, difficultyScalingFactor));  // 현재 웨이브에 대한 생성될 적의 수 계산
+    }
+
+    private float EnemiesPerSecond()
+    {
+        return Mathf.Clamp(enemiesPerSecond * Mathf.Pow(currentWave, difficultyScalingFactor), 0f, enemiesPerSecondCap);  // 현재 웨이브에 대한 생성될 적의 수 계산
     }
 }

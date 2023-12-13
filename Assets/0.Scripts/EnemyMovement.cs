@@ -11,8 +11,11 @@ public class EnemyMovement : MonoBehaviour
     private Transform target;
     private int pathIndex = 0;
 
+    private float baseSpeed;
+
     private void Start()
     {
+        baseSpeed = moveSpeed;
         target = LevelManager.main.path[pathIndex];  //목표 지점 설정
     }
 
@@ -40,5 +43,15 @@ public class EnemyMovement : MonoBehaviour
         Vector2 direction = (target.position - transform.position).normalized;  //캐릭터가 목표 지점으로 향하는 방향을 단위 벡터로 계산
 
         rb.velocity = direction * moveSpeed;  //Rigidbody2D 컴포넌트의 속도를 방향과 이동 속도를 곱한 값으로 설정하여 이동
+    }
+
+    public void UpdateSpeed(float newSpeed)
+    {
+        moveSpeed = newSpeed;
+    }
+
+    public void ResetSpeed()
+    {
+        moveSpeed = baseSpeed;
     }
 }
