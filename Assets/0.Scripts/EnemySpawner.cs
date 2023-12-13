@@ -10,12 +10,13 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private int baseEnemies = 8;  //기본 적의 생성 수
     [SerializeField] private float enemiesPerSecond = 0.5f;  // 초당 생성되는 적의 수    (1/enemiesperSecond)
     [SerializeField] private float timeBetWeenWaves = 5f;  //웨이브 간 시간 간격
-    [SerializeField] private float difficultyScalingFactor = 0.75f;  //난이도 조절 계수
+    [SerializeField] private float difficultyScalingFactor = 0.8f;  //난이도 조절 계수
     [SerializeField] private float enemiesPerSecondCap = 15f;
 
     public static UnityEvent onEnemyDestroy = new UnityEvent();
 
     private int currentWave = 1;  //현재 웨이브
+    private int upgradeWave = 0;
     private float timeSinceLastSpawn;  //마지막 적 생성 이후의 경과 시간
     private int enemiesAlive;  //현재 존재하는 적의 수
     private int enemiesLeftToSpawn;  //생성되지 않은 적의 수
@@ -37,6 +38,12 @@ public class EnemySpawner : MonoBehaviour
         if (isSpawning == false)
         {
             return;
+        }
+
+        if (upgradeWave == 3)
+        {
+            Health.main.HpUphrade();
+            upgradeWave = 0;
         }
 
         timeSinceLastSpawn += Time.deltaTime;
@@ -73,6 +80,7 @@ public class EnemySpawner : MonoBehaviour
         isSpawning = false;
         timeSinceLastSpawn = 0f;
         currentWave++;
+        upgradeWave++;
         StartCoroutine(StartWave());
     }
 

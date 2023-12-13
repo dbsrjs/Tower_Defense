@@ -8,8 +8,8 @@ public class Turret : MonoBehaviour
 {
     [SerializeField] private Transform turretRotationPoint;  //포탑 회전 지점의 Transform 컴포넌트
     [SerializeField] private LayerMask enemyMask;  //적 캐릭터를 판별하기 위한 레이어 마스크
-    [SerializeField] private GameObject bulletPrefab;
-    [SerializeField] private Transform firingPoint;
+    [SerializeField] private GameObject bulletPrefab;   //초알
+    [SerializeField] private Transform firingPoint; //총알 발사 위치
     [SerializeField] private GameObject upgradeUI;
     [SerializeField] private Button upgradeButton;
 
@@ -92,6 +92,12 @@ public class Turret : MonoBehaviour
         turretRotationPoint.rotation = Quaternion.RotateTowards(turretRotationPoint.rotation, targetRotation, rotationSpeed * Time.deltaTime);
     }
 
+    public void TurretDestoy()
+    {
+        Destroy(gameObject);
+        LevelManager.main.currency += 50;
+    }
+
     public void OpenUpgradeUI()
     {
         upgradeUI.SetActive(true);
@@ -119,27 +125,27 @@ public class Turret : MonoBehaviour
 
         CloseUpgradeUI();
         Debug.Log("New BPS : " + bps);
-        Debug.Log("New BPS : " + targetingRange);
+        Debug.Log("New targetingRange : " + targetingRange);
         Debug.Log("New Cost : " + CalculateCost());
     }
 
-    private int CalculateCost()
+    private int CalculateCost() //업그레이드에 필요한 돈
     {
         return Mathf.RoundToInt(baseUpgradeCoset * Mathf.Pow(level, 0.8f));
     }
 
-    private float CalculateBPS()
+    private float CalculateBPS()    //총알 발사 속도
     {
-        return bpsBase * Mathf.Pow(level, 0.6f);
+        return bpsBase * Mathf.Pow(level, 0.4f);
     }
-    private float CalculateRange()
+    private float CalculateRange()  //사격 가능 범위
     {
-        return targetingRangeBase * Mathf.Pow(level, 0.4f);
+        return targetingRangeBase * Mathf.Pow(level, 0.2f);
     }
 
-    /*private void OnDrawGizmosSelected()
+    private void OnDrawGizmosSelected()
     {
         Handles.color = Color.cyan; //프레임 색상
         Handles.DrawWireDisc(transform.position, transform.forward, targetingRange);  //에디터 상에서 사정 거리를 시각적으로 표시
-    }*/
+    }
 }
