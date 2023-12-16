@@ -9,6 +9,7 @@ public class Plot : MonoBehaviour
 
     [HideInInspector] public GameObject towerObj;
     [HideInInspector] public Turret turret;
+    [HideInInspector] public TurretSlow turretSlow;
     private Color startColor;
 
     private void Start()

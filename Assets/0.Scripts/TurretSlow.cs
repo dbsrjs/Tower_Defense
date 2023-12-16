@@ -48,6 +48,7 @@ public class TurretSlow : MonoBehaviour
         em.ResetSpeed();
     }
 
+
     private void OnDrawGizmosSelected()
     {
         Handles.color = Color.cyan; //프레임 색상
