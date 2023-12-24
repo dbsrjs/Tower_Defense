@@ -13,7 +13,7 @@ public class Turret : MonoBehaviour
     [SerializeField] private GameObject upgradeUI;
     [SerializeField] private Button upgradeButton;
 
-    [SerializeField] private float targetingRange = 5f;  //사정 거리
+    public float targetingRange = 5f;  //사정 거리
     [SerializeField] private float rotationSpeed = 5f;  //포탑 회전 속도
     [SerializeField] private float bps = 1f;    //총알 속도
     [SerializeField] private int baseUpgradeCoset = 100;
@@ -33,7 +33,6 @@ public class Turret : MonoBehaviour
 
         upgradeButton.onClick.AddListener(Upgrade);
     }
-
     private void Update()
     {
         if (target == null)
@@ -92,7 +91,7 @@ public class Turret : MonoBehaviour
         turretRotationPoint.rotation = Quaternion.RotateTowards(turretRotationPoint.rotation, targetRotation, rotationSpeed * Time.deltaTime);
     }
 
-    public void TurretDestoy()
+    public void TurretDestoy()  //터렛 삭제
     {
         Destroy(gameObject);
         LevelManager.main.currency += 50;
@@ -143,9 +142,23 @@ public class Turret : MonoBehaviour
         return targetingRangeBase * Mathf.Pow(level, 0.2f);
     }
 
+    public void OnDrawGizmos()
+    {
+        Gizmos.color = Color.cyan; // 프레임 색상 설정
+        Gizmos.DrawWireSphere(transform.position, targetingRange); // 사정 거리를 구를 형태로 게임 화면에 표시
+    }
+}
+
+public class ShowTargetingRange : MonoBehaviour
+{
+    [SerializeField] private Turret turret;
+
     private void OnDrawGizmosSelected()
     {
-        Handles.color = Color.cyan; //프레임 색상
-        Handles.DrawWireDisc(transform.position, transform.forward, targetingRange);  //에디터 상에서 사정 거리를 시각적으로 표시
+        if (turret != null)
+        {
+            Gizmos.color = Color.cyan;
+            Gizmos.DrawWireSphere(turret.transform.position, turret.targetingRange);
+        }
     }
 }

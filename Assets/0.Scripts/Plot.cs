@@ -7,7 +7,7 @@ public class Plot : MonoBehaviour
     [SerializeField] private SpriteRenderer sr;
     [SerializeField] private Color hoverColor;
 
-    [HideInInspector] public GameObject towerObj;
+    [HideInInspector] public GameObject towerObj;   //포탑 유무 여부
     [HideInInspector] public Turret turret;
     [HideInInspector] public TurretSlow turretSlow;
     private Color startColor;
@@ -58,10 +58,32 @@ public class Plot : MonoBehaviour
     {
         if (towerObj != null)
         {
-            if (Input.GetMouseButtonDown(1))
+            turret = towerObj.GetComponent<Turret>();
+            turretSlow = towerObj.GetComponent<TurretSlow>();
+
+            if (towerObj.GetComponent<Turret>() == true)    //터렛 사정거리 표시
             {
-                turret = towerObj.GetComponent<Turret>();
-                turret.TurretDestoy();
+                turret.OnDrawGizmos();
+            }
+
+            else
+            {
+                //turretSlow.OnDrawGizmosSelected();
+            }
+
+            if (Input.GetMouseButtonDown(1))    //터렛 삭제(우클릭)
+            {
+                
+
+                if (towerObj.GetComponent<Turret>() == true)
+                {
+                    turret.TurretDestoy();
+                }
+
+                else
+                {
+                    turretSlow.TurretDestoy();
+                }
             }
         }
     }

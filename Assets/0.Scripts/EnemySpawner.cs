@@ -81,6 +81,7 @@ public class EnemySpawner : MonoBehaviour
         timeSinceLastSpawn = 0f;
         currentWave++;
         upgradeWave++;
+        Ui.main.wave_Text.text = currentWave.ToString();
         StartCoroutine(StartWave());
     }
 

@@ -48,8 +48,14 @@ public class TurretSlow : MonoBehaviour
         em.ResetSpeed();
     }
 
+    public void TurretDestoy()  //터렛 삭제
+    {
+        Destroy(gameObject);
+        LevelManager.main.currency += 100;
+    }
 
-    private void OnDrawGizmosSelected()
+
+    public void OnDrawGizmosSelected()
     {
         Handles.color = Color.cyan; //프레임 색상
         Handles.DrawWireDisc(transform.position, transform.forward, targetingRange);  //에디터 상에서 사정 거리를 시각적으로 표시
