@@ -63,12 +63,12 @@ public class Plot : MonoBehaviour
 
             if (towerObj.GetComponent<Turret>() == true)    //터렛 사정거리 표시
             {
-                turret.OnDrawGizmos();
+                turret.border.SetActive(true);
             }
 
             else
             {
-                //turretSlow.OnDrawGizmosSelected();
+                turretSlow.OnDrawGizmosSelected();
             }
 
             if (Input.GetMouseButtonDown(1))    //터렛 삭제(우클릭)

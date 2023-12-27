@@ -12,8 +12,9 @@ public class Turret : MonoBehaviour
     [SerializeField] private Transform firingPoint; //총알 발사 위치
     [SerializeField] private GameObject upgradeUI;
     [SerializeField] private Button upgradeButton;
+    public GameObject border;
 
-    public float targetingRange = 5f;  //사정 거리
+    public float targetingRange = 3f;  //사정 거리
     [SerializeField] private float rotationSpeed = 5f;  //포탑 회전 속도
     [SerializeField] private float bps = 1f;    //총알 속도
     [SerializeField] private int baseUpgradeCoset = 100;
@@ -28,6 +29,10 @@ public class Turret : MonoBehaviour
 
     private void Start()
     {
+        Debug.Log(targetingRange);
+        Debug.Log(targetingRange / 2.542372881355932f);
+        border.transform.localScale = new Vector3(targetingRange / 2.542372881355932f, targetingRange / 2.542372881355932f, targetingRange / 2.542372881355932f);
+
         bpsBase = bps;
         targetingRangeBase = targetingRange;
 
@@ -140,25 +145,12 @@ public class Turret : MonoBehaviour
     private float CalculateRange()  //사격 가능 범위
     {
         return targetingRangeBase * Mathf.Pow(level, 0.2f);
+        border.transform.localScale = new Vector3(targetingRange / 2.542372881355932f, targetingRange / 2.542372881355932f, targetingRange / 2.542372881355932f);
     }
-
-    public void OnDrawGizmos()
-    {
-        Gizmos.color = Color.cyan; // 프레임 색상 설정
-        Gizmos.DrawWireSphere(transform.position, targetingRange); // 사정 거리를 구를 형태로 게임 화면에 표시
-    }
-}
-
-public class ShowTargetingRange : MonoBehaviour
-{
-    [SerializeField] private Turret turret;
 
     private void OnDrawGizmosSelected()
     {
-        if (turret != null)
-        {
-            Gizmos.color = Color.cyan;
-            Gizmos.DrawWireSphere(turret.transform.position, turret.targetingRange);
-        }
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawWireSphere(transform.position, targetingRange);
     }
 }
