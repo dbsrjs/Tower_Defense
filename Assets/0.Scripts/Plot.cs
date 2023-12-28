@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Plot : MonoBehaviour
@@ -22,12 +23,60 @@ public class Plot : MonoBehaviour
         sr.color = hoverColor;
     }
 
+    private void OnMouseOver()  //마우스가 오브젝트 위에 올라가 있는 동안
+    {
+        if (towerObj != null)
+        {
+            turret = towerObj.GetComponent<Turret>();
+            turretSlow = towerObj.GetComponent<TurretSlow>();
+
+            if (towerObj.GetComponent<Turret>() == true)    //터렛 사정거리 표시
+            {
+                turret.border.SetActive(true);
+            }
+
+            else
+            {
+                turretSlow.border.SetActive(true);
+            }
+
+            if (Input.GetMouseButtonDown(1))    //터렛 삭제(우클릭)
+            {
+                if (towerObj.GetComponent<Turret>() == true)
+                {
+                    turret.TurretDestoy();
+                }
+
+                else
+                {
+                    turretSlow.TurretDestoy();
+                }
+            }
+        }
+    }
+
     private void OnMouseExit()
     {
         sr.color = startColor;
+
+        if (towerObj != null)
+        {
+            turret = towerObj.GetComponent<Turret>();
+            turretSlow = towerObj.GetComponent<TurretSlow>();
+
+            if (towerObj.GetComponent<Turret>() == true)
+            {
+                turret.border.SetActive(false);
+            }
+
+            else
+            {
+                turretSlow.border.SetActive(false);
+            }
+        }
     }
 
-    private void OnMouseDown()
+    private void OnMouseDown()  //좌클릭을 눌렀을 때
     {
         if (UIManager.main.IsHoveringUI())
         {
@@ -52,39 +101,5 @@ public class Plot : MonoBehaviour
 
         towerObj = Instantiate(towerToBuild.prefab, transform.position, Quaternion.identity);
         turret = towerObj.GetComponent<Turret>();
-    }
-
-    private void OnMouseOver()  //마우스가 오브젝트 위에 올라가 있는 동안
-    {
-        if (towerObj != null)
-        {
-            turret = towerObj.GetComponent<Turret>();
-            turretSlow = towerObj.GetComponent<TurretSlow>();
-
-            if (towerObj.GetComponent<Turret>() == true)    //터렛 사정거리 표시
-            {
-                turret.border.SetActive(true);
-            }
-
-            else
-            {
-                turretSlow.OnDrawGizmosSelected();
-            }
-
-            if (Input.GetMouseButtonDown(1))    //터렛 삭제(우클릭)
-            {
-                
-
-                if (towerObj.GetComponent<Turret>() == true)
-                {
-                    turret.TurretDestoy();
-                }
-
-                else
-                {
-                    turretSlow.TurretDestoy();
-                }
-            }
-        }
     }
 }

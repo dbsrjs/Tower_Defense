@@ -40,7 +40,7 @@ public class EnemySpawner : MonoBehaviour
             return;
         }
 
-        if (upgradeWave == 3)
+        if (upgradeWave == 3)   //웨이브가 3 증가 할 때마다 HP 2 증가
         {
             Health.main.HpUphrade();
             upgradeWave = 0;

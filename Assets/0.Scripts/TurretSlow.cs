@@ -7,11 +7,18 @@ public class TurretSlow : MonoBehaviour
 {
     [SerializeField] private LayerMask enemyMask;  //적 캐릭터를 판별하기 위한 레이어 마스크
 
-    [SerializeField] private float targetingRange = 5f;  //사정 거리
+    [SerializeField] private float targetingRange = 2f;  //사정 거리
     [SerializeField] private float aps = 4.4f;    //공격 속도
     [SerializeField] private float freezeTime = 1f; //정지 시간
+    public GameObject border;
 
     private float timeUntilFire;
+
+    private void Start()
+    {
+        border.SetActive(false);
+        border.transform.localScale = new Vector3(targetingRange / 2f, targetingRange / 2f, targetingRange / 2f);
+    }
 
     private void Update()
     {
@@ -52,12 +59,5 @@ public class TurretSlow : MonoBehaviour
     {
         Destroy(gameObject);
         LevelManager.main.currency += 100;
-    }
-
-
-    public void OnDrawGizmosSelected()
-    {
-        Handles.color = Color.cyan; //프레임 색상
-        Handles.DrawWireDisc(transform.position, transform.forward, targetingRange);  //에디터 상에서 사정 거리를 시각적으로 표시
     }
 }

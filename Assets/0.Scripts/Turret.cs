@@ -29,8 +29,7 @@ public class Turret : MonoBehaviour
 
     private void Start()
     {
-        Debug.Log(targetingRange);
-        Debug.Log(targetingRange / 2.542372881355932f);
+        border.SetActive(false);
         border.transform.localScale = new Vector3(targetingRange / 2.542372881355932f, targetingRange / 2.542372881355932f, targetingRange / 2.542372881355932f);
 
         bpsBase = bps;
@@ -126,6 +125,7 @@ public class Turret : MonoBehaviour
 
         bps = CalculateBPS();
         targetingRange = CalculateRange();
+        border.transform.localScale = new Vector3(targetingRange / 2.542372881355932f, targetingRange / 2.542372881355932f, targetingRange / 2.542372881355932f);
 
         CloseUpgradeUI();
         Debug.Log("New BPS : " + bps);
@@ -145,12 +145,5 @@ public class Turret : MonoBehaviour
     private float CalculateRange()  //사격 가능 범위
     {
         return targetingRangeBase * Mathf.Pow(level, 0.2f);
-        border.transform.localScale = new Vector3(targetingRange / 2.542372881355932f, targetingRange / 2.542372881355932f, targetingRange / 2.542372881355932f);
-    }
-
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.cyan;
-        Gizmos.DrawWireSphere(transform.position, targetingRange);
     }
 }
