@@ -7,29 +7,26 @@ public class Ui : MonoBehaviour
 {
     public static Ui main;
 
-    public GameObject[] life;
-    public TMP_Text wave_Text;
+    public TMP_Text life;
+    public TMP_Text wave;
 
-    private int num = 0;
+    [HideInInspector] public int num = 3;
 
     private void Awake()
     {
         main = this;
-        wave_Text.text = "1";
-    }
-
-    private void Update()
-    {
-        
+        life.text = num.ToString();
+        wave.text = "1";
     }
 
     public void Hit()
     {
-        Destroy(life[num]);
-        num++;
-        if (num == 3)
+        num--;
+        life.text = num.ToString();
+        if (num == 0)
         {
             Time.timeScale = 0;
+            GameManager.main.Game_Over();
         }
     }
 }

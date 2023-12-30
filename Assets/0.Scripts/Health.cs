@@ -8,7 +8,7 @@ public class Health : MonoBehaviour
 {
     public static Health main;
 
-    [SerializeField] private int hitPoints = 2; //HP
+    public int hitPoints = 2; //HP
     [SerializeField] private int currencyWorth = 50;    //¶³±¸´Â µ·
     [SerializeField] private TMP_Text hp_text;
 

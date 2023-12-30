@@ -78,7 +78,7 @@ public class Plot : MonoBehaviour
 
     private void OnMouseDown()  //ÁÂÅ¬¸¯À» ´­·¶À» ¶§
     {
-        if (UIManager.main.IsHoveringUI())
+        if (UIManager.main.IsHoveringUI() || Time.time == 0)
         {
             return;
         }

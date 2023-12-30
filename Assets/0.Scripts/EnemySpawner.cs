@@ -5,6 +5,8 @@ using UnityEngine.Events;
 
 public class EnemySpawner : MonoBehaviour
 {
+    public static EnemySpawner main;
+
     [SerializeField] private GameObject[] enemyPrefabs;
 
     [SerializeField] private int baseEnemies = 8;  //기본 적의 생성 수
@@ -25,6 +27,7 @@ public class EnemySpawner : MonoBehaviour
 
     private void Awake()
     {
+        main = this;
         onEnemyDestroy.AddListener(EnemyDestroyed);  // 적이 파괴되었을 때 호출될 함수
     }
 
@@ -81,7 +84,7 @@ public class EnemySpawner : MonoBehaviour
         timeSinceLastSpawn = 0f;
         currentWave++;
         upgradeWave++;
-        Ui.main.wave_Text.text = currentWave.ToString();
+        Ui.main.wave.text = currentWave.ToString();
         StartCoroutine(StartWave());
     }
 
@@ -100,5 +103,14 @@ public class EnemySpawner : MonoBehaviour
     private float EnemiesPerSecond()
     {
         return Mathf.Clamp(enemiesPerSecond * Mathf.Pow(currentWave, difficultyScalingFactor), 0f, enemiesPerSecondCap);  // 현재 웨이브에 대한 생성될 적의 수 계산
+    }
+
+    public void ReGame()
+    {
+        currentWave = 1;
+        upgradeWave = 0;
+        timeSinceLastSpawn = 0f;
+        enemiesAlive = 0;
+        enemiesLeftToSpawn = 0;
     }
 }
