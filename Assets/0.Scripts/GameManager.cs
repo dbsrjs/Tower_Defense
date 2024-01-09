@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -65,18 +66,14 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 0;
         game_Over.SetActive(true);
-
-        Ui.main.num = 3;
-        Ui.main.wave.text = "1";
-        Health.main.hitPoints = 2;
-        EnemySpawner.main.ReGame();
-        LevelManager.main.currency = 300;
     }
 
     public void RePlay_Yes()
     {
         game_Over.SetActive(false);
         Time.timeScale = 1;
+        SceneManager.LoadScene("Game");
+
     }
 
     public void RePlay_No()
