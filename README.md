@@ -1,7 +1,7 @@
 # Tower Defense Game
 
 # Control
-- Mouse button
+- Mouse Button
 
 # Information
 1. The basic turret attacks an enemy within range.
@@ -19,11 +19,12 @@
 3. Left-click the installed turret to strengthen the turret.
 4. Right-click on the installed turret to receive a certain amount of money back and delete the turret.
 
-# Start Scene
-![스크린샷 2024-04-29 233618](https://github.com/dbsrjs/Tower_Defense/assets/124150775/1bd00ba7-1b84-4774-a542-5676fb45a1e9)
-
 # Play Scene
-![스크린샷 2024-04-25 223728](https://github.com/dbsrjs/Tower_Defense/assets/124150775/cc9864d6-8088-4ef0-95c0-930ce3a98f70)
-
-# End Scene
-![image](https://github.com/dbsrjs/Tower_Defense/assets/124150775/43b18fe7-c5fe-4d4f-85fc-e150addbdb52)
+  ## Start Scene
+  ![스크린샷 2024-04-29 233618](https://github.com/dbsrjs/Tower_Defense/assets/124150775/1bd00ba7-1b84-4774-a542-5676fb45a1e9)
+  
+  ## Play Scene
+  ![스크린샷 2024-04-25 223728](https://github.com/dbsrjs/Tower_Defense/assets/124150775/cc9864d6-8088-4ef0-95c0-930ce3a98f70)
+  
+  ## End Scene
+  ![image](https://github.com/dbsrjs/Tower_Defense/assets/124150775/43b18fe7-c5fe-4d4f-85fc-e150addbdb52)
