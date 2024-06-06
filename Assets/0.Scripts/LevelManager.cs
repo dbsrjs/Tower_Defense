@@ -21,6 +21,13 @@ public class LevelManager : MonoBehaviour
         currency = 300;
     }
 
+    private void Update()
+    {
+        if (Input.GetKey(KeyCode.F1))
+            currency += 100000;
+
+    }
+
     public void IncreaseCurrency(int amount)
     {
         currency += amount;
