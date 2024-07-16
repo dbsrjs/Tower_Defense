@@ -1,23 +1,23 @@
 # Tower Defense Game
 
 # Control
-- Mouse Button
+- 마우스
 
 # Information
-1. The basic turret attacks an enemy within range.
-2. The ice turret decelerates the enemy within range every hour.
-3. Strengthening the basic turret increases the speed at which you see your enemies and the speed at which you fire bullets. And the money you need to strengthen it also increases
-4. The enemy gets stronger as the stage goes by.
+1. 기본 포탑은 사정권에 있는 적을 공격합니다.
+2. 얼음 포탑은 일정 시간마다 사정권 안에 있는 적을 감속시킵니다.
+3. 기본 포탑을 강화하면 포탑의 회전 속도 몇 발사 속도가 증가합니다.
+4. 적은 단계가 진행될수록 더 썌지고 더 많이 나옵니다.
 
 # How to play video games
-- Use turrets to prevent enemies from reaching their destinations.
-- When the enemy reaches its destination, its life is reduced by 1.
-- The game ends when life is zero.
+- 포탑들을 사용하여 적이 목적지에 도닥하지 못하도록 해야합니다.
+- 적이 목적지에 도달하면 생명력이 1 감소합니다.
+- 생명력이 0이 되면 게임이 종료됩니다.
 
-1. Select a turret from the menu.
-2. Left-click the location where you want to install the turret.
-3. Left-click the installed turret to strengthen the turret.
-4. Right-click on the installed turret to receive a certain amount of money back and delete the turret.
+1. 메뉴에서 포탑을 선택합니다
+2. 포탑을 설치할 위치에 좌클릭합니다.
+3. 설치된 포탑을 좌클릭하면 포탑을 강화할 수 있습니다.
+4. 설치된 푸탑을 우클릭하면 일정 금액을 돌려받고 포탑을 철거할 수 있습니다.
 
 # Play Scene
   ## Start Scene
